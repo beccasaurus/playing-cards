@@ -70,6 +70,18 @@ describe Card do
     card.name.should      == '4'
     card.suite.should     == 'club'
     card.full_name.should == '4 of Clubs'
+
+    TheJackofSpades.name.should      == 'Jack'
+    TheJackofSpades.suite.should     == 'spade'
+    TheJackofSpades.full_name.should == 'Jack of Spades'
+
+    KingofSpades.name.should      == 'King'
+    KingofSpades.suite.should     == 'spade'
+    KingofSpades.full_name.should == 'King of Spades'
+
+    AceofDiamonds.name.should      == 'Ace'
+    AceofDiamonds.suite.should     == 'diamond'
+    AceofDiamonds.full_name.should == 'Ace of Diamonds'
   end
 
 end
