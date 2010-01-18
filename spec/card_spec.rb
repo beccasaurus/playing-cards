@@ -16,6 +16,20 @@ describe Card do
     card.full_name.should == '4 of Clubs'
   end
 
+  it 'can be initialized using an abbreviated string like "4C"' do
+    card = Card.new '4C'
+    card.name.should      == '4'
+    card.suite.should     == 'club'
+    card.full_name.should == '4 of Clubs'
+  end
+
+  it 'can be initialized using an abbreviated string like "JS"' do
+    card = Card.new 'JS'
+    card.name.should      == 'Jack'
+    card.suite.should     == 'spade'
+    card.full_name.should == 'Jack of Spades'
+  end
+
   it 'can be initialized using a string like "The 4 of Clubs"' do
     card = Card.new 'The 4 of Clubs'
     card.name.should      == '4'

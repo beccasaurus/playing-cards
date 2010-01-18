@@ -7,6 +7,9 @@ class Card
   STANDARD_PLAYING_CARD_NAMES  = %w( 2 3 4 5 6 7 8 9 10 Jack Queen King Ace )
   STANDARD_PLAYING_CARD_SUITES = %w( Spades Hearts Clubs Diamonds )
 
+  NAME_ABBREVIATIONS  = { 'j' => 'Jack', 'q' => 'Queen', 'k' => 'King', 'a' => 'Ace' }
+  SUITE_ABBREVIATIONS = { 's' => 'spade', 'h' => 'heart', 'c' => 'club', 'd' => 'diamond' }
+
   attr_accessor :name, :suite
 
   def initialize name, suite = nil
@@ -48,8 +51,30 @@ class Card
 private
 
   def parse name_to_parse
-    name, suite = name_to_parse.split('of')
-    self.name, self.suite = name, suite
+    parts = name_to_parse.split('of')
+
+    # "Jack of Spades" or "The Jack of Spades"
+    if parts.length == 2
+      self.name, self.suite = parts.first, parts.last
+
+    # "JS"
+    elsif parts.length == 1 and parts.first.length == 2
+      self.name  = name_from_appreviation  parts.first[0..0]
+      self.suite = suite_from_appreviation parts.first[1..1]
+
+    else
+      raise "Not sure how to parse card: #{ name_to_parse.inspect }"
+    end
+  end
+
+  def name_from_appreviation abbreviated_name
+    name = abbreviated_name.to_s.downcase
+    NAME_ABBREVIATIONS[name] || name
+  end
+
+  def suite_from_appreviation abbreviated_suite
+    suite = abbreviated_suite.to_s.downcase
+    SUITE_ABBREVIATIONS[suite] || suite
   end
 
 end
