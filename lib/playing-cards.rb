@@ -100,7 +100,7 @@ class Deck
 
   attr_accessor :cards
 
-  def_delegators :cards, :first, :last, :length
+  def_delegators :cards, :first, :last, :length, :empty?, :[], :[]=
 
   # TODO deprecate the use of Deck.new except for low-level 
   #      stuff ... Deck.standard should be used to get a standard deck!
@@ -205,6 +205,8 @@ class Solitaire
     end
 
     waste.add draw_pile.draw(number)
+
+    self
   end
 
   alias waste! draw_on_to_waste
@@ -224,7 +226,11 @@ private
   end
 
   def draw_draw_pile
-    "[] XX XX XX"
+    if waste.empty?
+      "[]         "
+    else
+      "[] #{ waste[0].short_name || '  ' } #{ waste[1].short_name || '  ' } #{ waste[2].short_name || '  ' }"
+    end
   end
 
   def draw_suite_piles
