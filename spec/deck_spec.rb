@@ -80,6 +80,25 @@ describe Deck do
     deck.last.should == The6ofSpades
   end
 
+  it 'can #draw_all' do
+    deck1 = Deck.standard
+    deck2 = Deck.standard
+
+    deck1.length.should == 52
+    deck2.length.should == 52
+
+    deck2.add deck1.draw_all
+
+    deck1.length.should == 0
+    deck2.length.should == 104
+
+    # and we can add some back ...
+    deck1.add deck2.draw(5)
+
+    deck1.length.should == 5
+    deck2.length.should == 99
+  end
+
   it 'can #draw_from_top or #draw_from_bottom'
 
   it 'can #add_to_top or #add_to_bottom'
