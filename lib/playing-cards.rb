@@ -32,6 +32,10 @@ class Card
     "#{ name } of #{ suite.capitalize }s"
   end
 
+  def short_name
+    "#{ name[0..0].upcase }#{ suite[0..0].upcase }"
+  end
+
   def self.[] name, suite = nil
     Card.new name, suite
   end
@@ -48,6 +52,16 @@ class Card
     another_card.name == name && another_card.suite == suite if another_card.is_a?(Card)
   end
 
+  def self.name_from_appreviation abbreviated_name
+    name = abbreviated_name.to_s.downcase
+    NAME_ABBREVIATIONS[name] || name
+  end
+
+  def self.suite_from_appreviation abbreviated_suite
+    suite = abbreviated_suite.to_s.downcase
+    SUITE_ABBREVIATIONS[suite] || suite
+  end
+
 private
 
   def parse name_to_parse
@@ -59,22 +73,12 @@ private
 
     # "JS"
     elsif parts.length == 1 and parts.first.length == 2
-      self.name  = name_from_appreviation  parts.first[0..0]
-      self.suite = suite_from_appreviation parts.first[1..1]
+      self.name  = Card.name_from_appreviation  parts.first[0..0]
+      self.suite = Card.suite_from_appreviation parts.first[1..1]
 
     else
       raise "Not sure how to parse card: #{ name_to_parse.inspect }"
     end
-  end
-
-  def name_from_appreviation abbreviated_name
-    name = abbreviated_name.to_s.downcase
-    NAME_ABBREVIATIONS[name] || name
-  end
-
-  def suite_from_appreviation abbreviated_suite
-    suite = abbreviated_suite.to_s.downcase
-    SUITE_ABBREVIATIONS[suite] || suite
   end
 
 end

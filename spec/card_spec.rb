@@ -25,16 +25,18 @@ describe Card do
 
   it 'can be initialized using an abbreviated string like "JS"' do
     card = Card.new 'JS'
-    card.name.should      == 'Jack'
-    card.suite.should     == 'spade'
-    card.full_name.should == 'Jack of Spades'
+    card.name.should       == 'Jack'
+    card.suite.should      == 'spade'
+    card.full_name.should  == 'Jack of Spades'
+    card.short_name.should == 'JS'
   end
 
   it 'can be initialized using a string like "The 4 of Clubs"' do
     card = Card.new 'The 4 of Clubs'
-    card.name.should      == '4'
-    card.suite.should     == 'club'
-    card.full_name.should == '4 of Clubs'
+    card.name.should       == '4'
+    card.suite.should      == 'club'
+    card.full_name.should  == '4 of Clubs'
+    card.short_name.should == '4C'
   end
 
   it 'can easily get a card via Card[4, :club]' do
