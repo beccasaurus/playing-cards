@@ -106,6 +106,16 @@ class Deck
     self.cards = Deck.cards_for_standard_52_deck
   end
 
+  def shuffle!
+    the_cards = cards  # take the current cards and save them
+    self.cards = []    # reset cards
+
+    the_cards.length.times {
+      # pick a card at random and add it to the cards
+      self.cards << the_cards.delete_at(rand(the_cards.length))
+    }
+  end
+
   def self.cards_for_standard_52_deck
     cards = []
 
