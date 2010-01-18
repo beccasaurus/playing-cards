@@ -106,6 +106,28 @@ class Deck
     self.cards = Deck.cards_for_standard_52_deck
   end
 
+  def add *cards
+    if cards.length == 1
+      if cards.first.is_a?(Card)
+        self.cards << cards.first
+      else
+        cards.first.each {|card| self.cards << card } # assume array passed
+      end
+    else
+      cards.each {|card| self.cards << card }
+    end
+  end
+
+  def draw number = nil
+    if number.nil?
+      self.cards.delete_at(0)
+    else
+      drawn_cards = []
+      number.times { drawn_cards << self.cards.delete_at(0) }
+      drawn_cards
+    end
+  end
+
   def shuffle!
     the_cards = cards  # take the current cards and save them
     self.cards = []    # reset cards
@@ -114,6 +136,8 @@ class Deck
       # pick a card at random and add it to the cards
       self.cards << the_cards.delete_at(rand(the_cards.length))
     }
+    
+    self # return self so we can easily do Deck.new.shuffle!
   end
 
   def self.cards_for_standard_52_deck
@@ -126,6 +150,27 @@ class Deck
     end
 
     cards
+  end
+
+end
+
+class Solitaire
+
+  attr_accessor :piles # the 7 main "piles"
+
+  def initialize
+    # take a new deck and sort it into the piles
+    deck = Deck.new.shuffle!
+
+    7.times do |pile_index|
+      self.piles[pile_index] = []
+      pile = self.piles[pile_index]
+
+      # take cards from the deck and put them in the pile
+      (i + 1).times do
+        pile << deck.cards.take(1)
+      end
+    end
   end
 
 end
