@@ -89,6 +89,7 @@ class Solitaire
         raise "Cards cannot be placed onto cards of the same color"
       else
         pile.add waste_or_pile_for(card).draw(card)
+        waste_or_pile_for(card).last.show!
       end
     else
       raise "Hmm ... where is #{ onto_this_card.full_name }?"
