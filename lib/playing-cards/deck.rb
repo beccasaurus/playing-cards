@@ -5,11 +5,15 @@ class Deck
   attr_accessor :cards
 
   def_delegators :cards, :first, :last, :length, :empty?, :[], :[]=, 
-                         :include?, :delete, :each, :<<
+                         :include?, :delete, :<<
 
   def initialize array_or_deck = nil
     self.cards = array_or_deck.is_a?(Deck) ? array_or_deck.cards : array_or_deck
     self.cards ||= []
+  end
+
+  def each &block
+    cards.each(&block); self
   end
 
   def == value

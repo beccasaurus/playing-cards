@@ -58,6 +58,7 @@ class Card
   end
 
   def self.[] name, suite = nil
+    return name if name.is_a?(Card)
     Card.new name, suite
   end
 
