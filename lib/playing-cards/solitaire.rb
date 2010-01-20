@@ -9,7 +9,7 @@ class Solitaire
 
   def initialize
     # take a new deck and sort it into the piles
-    deck = Deck.new.shuffle!
+    deck = Deck.standard.shuffle!
 
     # draw cards from the deck and use them to create the piles
     self.piles = []

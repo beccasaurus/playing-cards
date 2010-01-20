@@ -3,15 +3,15 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe Deck do
 
   it 'should return a standard 52 card deck' do
-    deck = Deck.new
+    deck = Deck.standard
     deck.length.should == 52
     deck.first.should  == The2ofSpades
     deck.last.should   == AceofDiamonds
   end
 
   it 'should be able to shuffle' do
-    deck1 = Deck.new
-    deck2 = Deck.new
+    deck1 = Deck.standard
+    deck2 = Deck.standard
 
     deck1.first.should == The2ofSpades
     deck2.first.should == The2ofSpades
@@ -25,7 +25,7 @@ describe Deck do
   end
 
   it 'should be able to #draw cards from the deck (removes them)' do
-    deck = Deck.new
+    deck = Deck.standard
     deck.length.should == 52
 
     card = deck.draw
@@ -49,7 +49,7 @@ describe Deck do
   end
 
   it 'should be able to #add card(s) from the deck (adds them)' do
-    deck = Deck.new
+    deck = Deck.standard
     deck.length.should == 52
 
     card = deck.draw
@@ -131,6 +131,19 @@ describe Deck do
     # can also draw
     deck.draw(The7ofSpades).full_name.should == '7 of Spades'
     deck.length.should == 49
+  end
+  
+  it 'should be able to instantiate a deck with an array of cards' do
+    Deck.new.length.should == 0
+    Deck.new([TheJackofSpades]).length.should == 1
+    Deck.new([TheJackofSpades, The2ofHearts]).length.should == 2
+  end
+
+  it '#draw should actually return a deck' do
+    deck = Deck.standard
+    deck.draw.should be_a(Card)
+    deck.draw(1).should be_a(Deck)
+    deck.draw(2).should be_a(Deck)
   end
 
 end

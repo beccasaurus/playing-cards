@@ -4,12 +4,21 @@ class Deck
 
   attr_accessor :cards
 
-  def_delegators :cards, :first, :last, :length, :empty?, :[], :[]=, :include?, :delete
+  def_delegators :cards, :first, :last, :length, :empty?, :[], :[]=, 
+                         :include?, :delete, :each, :<<
 
-  # TODO deprecate the use of Deck.new except for low-level 
-  #      stuff ... Deck.standard should be used to get a standard deck!
-  def initialize
-    self.cards = Deck.cards_for_standard_52_deck
+  def initialize array_or_deck = nil
+    self.cards = array_or_deck.is_a?(Deck) ? array_or_deck.cards : array_or_deck
+    self.cards ||= []
+  end
+
+  def == value
+    return false unless value.respond_to?(:length) and value.length == length
+    return false unless value.respond_to?(:each)
+    value.each do |card|
+      return false unless include?(card)
+    end
+    return true
   end
 
   def remove card
@@ -18,14 +27,12 @@ class Deck
   
   # a standard deck of cards
   def self.standard
-    new
+    new(cards_for_standard_52_deck)
   end
 
   # an empty deck of cards
   def self.empty
-    deck = new
-    deck.cards = []
-    deck
+    new
   end
 
   def add *cards
@@ -52,7 +59,7 @@ class Deck
     else
       drawn_cards = []
       number_or_card.times { drawn_cards << cards.delete_at(0) }
-      drawn_cards
+      Deck.new(drawn_cards)
     end
   end
 

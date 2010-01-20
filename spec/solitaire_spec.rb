@@ -54,8 +54,23 @@ describe Solitaire do
     game.waste.length.should == 3
   end
 
-  it 'should be able to move the top waste card to a pile (should yell if not allowed)' do
-    pending 'need to be able to find a card in a deck'
+  it 'should be able to move the top waste card to a pile' do
+    pending 'draw should return a deck'
+    game = Solitaire.new
+    pile = game.piles.first
+    pile.length.should == 1
+
+    # cheat to make sure everything is setup properly
+    game.waste.add The2ofClubs
+    pile.add The3ofHearts
+    game.waste.length.should == 1
+    pile.length.should == 2
+
+    game.move The2ofClubs, The3ofHearts
+    game.waste.length.should == 0
+    pile.length.should == 3
+    pile[2].should == The3ofHearts
+    pile[1].should == The2ofClubs
   end
 
 end
