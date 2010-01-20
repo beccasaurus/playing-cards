@@ -9,6 +9,15 @@ describe Card do
     TheJackOfDiamonds.color.should == :red
   end
 
+  it 'to_i gives the appropriate number for a card' do
+    TheAceOfSpades.to_i.should    == 1
+    The2ofClubs.to_i.should       == 2
+    The10ofClubs.to_i.should      == 10
+    TheJackOfDiamonds.to_i.should == 11
+    TheQueenOfHearts.to_i.should  == 12
+    TheKingOfClubs.to_i.should    == 13
+  end
+
   it 'has a name, suite, and full_name (eg. "4 of Clubs")' do
     card = Card.new 4, :club
     card.name.should      == '4'

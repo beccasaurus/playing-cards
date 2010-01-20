@@ -5,6 +5,7 @@ require 'forwardable'
 class Card
 
   COLORS_FOR_SUITES = { 'club' => :black, 'spade' => :black, 'heart' => :red, 'diamond' => :red }
+  NUMBERS_FOR_FACE_CARDS = { 'Ace' => 1, 'Jack' => 11, 'Queen' => 12, 'King' => 13 }
 
   STANDARD_PLAYING_CARD_NAMES  = %w( 2 3 4 5 6 7 8 9 10 Jack Queen King Ace )
   STANDARD_PLAYING_CARD_SUITES = %w( Spades Hearts Clubs Diamonds )
@@ -26,6 +27,10 @@ class Card
     Card.color_for(suite)
   end
 
+  def to_i
+    Card.number_for(name)
+  end
+
   def name= value
     @name = value.to_s.strip.sub(/^The\s*/i, '')
   end
@@ -44,6 +49,10 @@ class Card
 
   def self.color_for suite
     COLORS_FOR_SUITES[suite]
+  end
+
+  def self.number_for name
+    NUMBERS_FOR_FACE_CARDS[name] || name.to_i
   end
 
   def self.[] name, suite = nil
