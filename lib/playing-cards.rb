@@ -4,6 +4,8 @@ require 'forwardable'
 
 class Card
 
+  COLORS_FOR_SUITES = { 'club' => :black, 'spade' => :black, 'heart' => :red, 'diamond' => :red }
+
   STANDARD_PLAYING_CARD_NAMES  = %w( 2 3 4 5 6 7 8 9 10 Jack Queen King Ace )
   STANDARD_PLAYING_CARD_SUITES = %w( Spades Hearts Clubs Diamonds )
 
@@ -20,6 +22,10 @@ class Card
     end
   end
 
+  def color
+    Card.color_for(suite)
+  end
+
   def name= value
     @name = value.to_s.strip.sub(/^The\s*/i, '')
   end
@@ -34,6 +40,10 @@ class Card
 
   def short_name
     "#{ name[0..0].upcase }#{ suite[0..0].upcase }"
+  end
+
+  def self.color_for suite
+    COLORS_FOR_SUITES[suite]
   end
 
   def self.[] name, suite = nil
@@ -66,6 +76,7 @@ private
 
   def parse name_to_parse
     parts = name_to_parse.split('of')
+    parts = name_to_parse.split('Of') if parts.length == 1
 
     # "Jack of Spades" or "The Jack of Spades"
     if parts.length == 2

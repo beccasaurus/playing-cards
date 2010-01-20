@@ -54,4 +54,8 @@ describe Solitaire do
     game.waste.length.should == 3
   end
 
+  it 'should be able to move the top waste card to a pile (should yell if not allowed)' do
+    pending 'cards need colors'
+  end
+
 end

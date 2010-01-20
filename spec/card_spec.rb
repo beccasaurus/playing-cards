@@ -2,6 +2,13 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Card do
 
+  it 'has a color (based on suite)' do
+    TheJackOfSpades.color.should   == :black
+    TheJackOfClubs.color.should    == :black
+    TheJackOfHearts.color.should   == :red
+    TheJackOfDiamonds.color.should == :red
+  end
+
   it 'has a name, suite, and full_name (eg. "4 of Clubs")' do
     card = Card.new 4, :club
     card.name.should      == '4'
