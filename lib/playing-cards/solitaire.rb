@@ -64,6 +64,15 @@ class Solitaire
     draw_game
   end
 
+  def bottom_cards
+    piles.map {|pile| pile.last }.compact
+  end
+
+  def waste_or_pile_for card
+    return waste if waste.last == card
+    piles.detect {|pile| pile.last == card }
+  end
+
   # this only affects piles right now
   def move card, onto_this_card = nil
     return smart_move(card) if onto_this_card.nil?
@@ -72,14 +81,14 @@ class Solitaire
 
     pile = pile_that_card_is_at_the_top_of(onto_this_card)
     if pile
-      if waste.last != card
+      if (waste.last != card) and not bottom_cards.include?(card)
         raise "#{ card.full_name } is not available to be moved"
       elsif card.to_i != (onto_this_card.to_i - 1)
         raise "Cards must be sequential"
       elsif card.color == onto_this_card.color
         raise "Cards cannot be placed onto cards of the same color"
       else
-        pile.add waste.draw(card)
+        pile.add waste_or_pile_for(card).draw(card)
       end
     else
       raise "Hmm ... where is #{ onto_this_card.full_name }?"
@@ -152,7 +161,12 @@ private
   end
 
   def draw_suite_piles
-    "[] [] [] []"
+    text = ''
+    suite_piles.each do |suite, pile|
+      text << (pile.empty? ? '[]' : pile.last.draw_name)
+      text << ' '
+    end
+    text
   end
 
   def draw_piles

@@ -185,11 +185,14 @@ describe Solitaire do
     game.waste.add TheAceOfHearts
     game.move TheAceOfHearts
     game.suite_piles['heart'].length.should == 1
+    game.inspect.should include('AH')
 
     game.waste.add The2ofHearts
     game.move The2ofHearts
     game.suite_piles['heart'].length.should == 2
     game.suite_piles['heart'].should include(TheAceOfHearts, The2ofHearts)
+    game.inspect.should     include('2H')
+    game.inspect.should_not include('AH')
   end
 
   it 'should require sequential cards to be moved onto suite piles' do
@@ -209,9 +212,13 @@ describe Solitaire do
     game.suite_piles['heart'].should_not include(The3ofHearts)
   end
 
+  it 'can move a card from one pile to another'
+
+  it 'flips over (shows) the last card on a pile after moving a card from one pile to another'
+
   it 'tells you that it cannot find a place to put a card if you try to move it'
 
-  it 'calling #move will intelligently move a card'
+  it 'calling move! will intelligently move a card (not just to the suite pile)'
 
   it '#move will let you manually move a card onto a suite pile or another pile'
 
