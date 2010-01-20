@@ -55,7 +55,7 @@ describe Solitaire do
   end
 
   it 'should be able to move the top waste card to a pile (should yell if not allowed)' do
-    pending 'cards need colors'
+    pending 'need to be able to find a card in a deck'
   end
 
 end

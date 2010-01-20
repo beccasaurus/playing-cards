@@ -103,4 +103,34 @@ describe Deck do
 
   it 'can #add_to_top or #add_to_bottom'
 
+  it 'can see if a deck includes a card' do
+    deck = Deck.standard
+    deck.should include(The2ofSpades)
+
+    deck.first.should == The2ofSpades
+    deck.draw # takes the first one, which is the 2 of spades
+
+    deck.should_not include(The2ofSpades)
+  end
+
+  it 'should be able to remove a specific card' do
+    deck = Deck.standard
+    deck.should include(The5ofSpades)
+
+    deck.length.should == 52
+    the_5 = deck.delete The5ofSpades
+    the_5.full_name.should == '5 of Spades'
+    deck.length.should == 51
+
+    deck.should_not include(The5ofSpades)
+
+    # ALIAS remove
+    deck.remove(The6ofSpades).full_name.should == '6 of Spades'
+    deck.length.should == 50
+
+    # can also draw
+    deck.draw(The7ofSpades).full_name.should == '7 of Spades'
+    deck.length.should == 49
+  end
+
 end

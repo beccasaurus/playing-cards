@@ -4,12 +4,16 @@ class Deck
 
   attr_accessor :cards
 
-  def_delegators :cards, :first, :last, :length, :empty?, :[], :[]=
+  def_delegators :cards, :first, :last, :length, :empty?, :[], :[]=, :include?, :delete
 
   # TODO deprecate the use of Deck.new except for low-level 
   #      stuff ... Deck.standard should be used to get a standard deck!
   def initialize
     self.cards = Deck.cards_for_standard_52_deck
+  end
+
+  def remove card
+    delete card
   end
   
   # a standard deck of cards
@@ -40,12 +44,14 @@ class Deck
     draw cards.length
   end
 
-  def draw number = nil
-    if number.nil?
-      self.cards.delete_at(0)
+  def draw number_or_card = nil
+    if number_or_card.nil?
+      cards.delete_at(0)
+    elsif number_or_card.is_a?(Card)
+      delete number_or_card
     else
       drawn_cards = []
-      number.times { drawn_cards << self.cards.delete_at(0) }
+      number_or_card.times { drawn_cards << cards.delete_at(0) }
       drawn_cards
     end
   end
