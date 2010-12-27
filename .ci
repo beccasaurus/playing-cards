@@ -1,3 +1,5 @@
 #! /bin/bash
 bundle install
+mkdir -p build_output
+touch build_output/testing
 bundle exec rspec --format documentation --color spec/
