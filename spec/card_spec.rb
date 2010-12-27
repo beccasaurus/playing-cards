@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Card do
 
+  it 'should fail' do
+    1.should == 2
+  end
+
   it 'has a color (based on suite)' do
     TheJackOfSpades.color.should   == :black
     TheJackOfClubs.color.should    == :black
