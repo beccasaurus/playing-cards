@@ -1,6 +1,4 @@
 #! /bin/bash
-source ~/.profile
-rvm use 1.8.7
 bundle install
 mkdir -p build_output
 touch build_output/testing
