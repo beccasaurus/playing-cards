@@ -10,4 +10,4 @@ standard playing cards and using them to create games!
 
 I'll replace this code with that code, once it's complete!
 
-![IRB Solitaire Screenshot](http://github.com/remi/playing-cards/raw/master/screenshot.png)
+![IRB Solitaire Screenshot](screenshot.png)
